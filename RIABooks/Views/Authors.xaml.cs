@@ -6,16 +6,16 @@
     /// <summary>
     /// <see cref="Page"/> class to present information about the current application.
     /// </summary>
-    public partial class About : Page
+    public partial class Authors : Page
     {
         /// <summary>
-        /// Creates a new instance of the <see cref="About"/> class.
+        /// Creates a new instance of the <see cref="Authors"/> class.
         /// </summary>
-        public About()
+        public Authors()
         {
             InitializeComponent();
 
-            this.Title = ApplicationStrings.AboutPageTitle;
+            this.Title = ApplicationStrings.AuthorsPageTitle;
         }
 
         /// <summary>

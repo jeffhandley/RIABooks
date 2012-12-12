@@ -6,16 +6,16 @@
     /// <summary>
     /// Home page for the application.
     /// </summary>
-    public partial class Home : Page
+    public partial class Books : Page
     {
         /// <summary>
-        /// Creates a new <see cref="Home"/> instance.
+        /// Creates a new <see cref="Books"/> instance.
         /// </summary>
-        public Home()
+        public Books()
         {
             InitializeComponent();
 
-            this.Title = ApplicationStrings.HomePageTitle;
+            this.Title = ApplicationStrings.BooksPageTitle;
         }
 
         /// <summary>

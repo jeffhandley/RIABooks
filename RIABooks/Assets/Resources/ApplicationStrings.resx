@@ -117,8 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AboutPageTitle" xml:space="preserve">
-    <value>About</value>
+  <data name="AuthorsPageTitle" xml:space="preserve">
+    <value>Authors</value>
   </data>
   <data name="AlreadyRegisteredLabel" xml:space="preserve">
     <value>Already registered?</value>
@@ -147,8 +147,8 @@
   <data name="CancelButton" xml:space="preserve">
     <value>Cancel</value>
   </data>
-  <data name="HomePageTitle" xml:space="preserve">
-    <value>Home</value>
+  <data name="BooksPageTitle" xml:space="preserve">
+    <value>Books</value>
   </data>
   <data name="LoginButton" xml:space="preserve">
     <value>login</value>

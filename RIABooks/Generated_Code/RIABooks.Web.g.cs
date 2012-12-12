@@ -792,3 +792,527 @@ namespace RIABooks.Web
         }
     }
 }
+namespace RIABooks.Web.Models
+{
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Linq;
+    using System.Runtime.Serialization;
+    using System.ServiceModel.DomainServices;
+    using System.ServiceModel.DomainServices.Client;
+    using System.ServiceModel.DomainServices.Client.ApplicationServices;
+    
+    
+    /// <summary>
+    /// The 'Author' entity class.
+    /// </summary>
+    [DataContract(Namespace="http://schemas.datacontract.org/2004/07/RIABooks.Web.Models")]
+    public sealed partial class Author : Entity
+    {
+        
+        private int _authorId;
+        
+        private string _firstName;
+        
+        private string _lastName;
+        
+        #region Extensibility Method Definitions
+
+        /// <summary>
+        /// This method is invoked from the constructor once initialization is complete and
+        /// can be used for further object setup.
+        /// </summary>
+        partial void OnCreated();
+        partial void OnAuthorIdChanging(int value);
+        partial void OnAuthorIdChanged();
+        partial void OnFirstNameChanging(string value);
+        partial void OnFirstNameChanged();
+        partial void OnLastNameChanging(string value);
+        partial void OnLastNameChanged();
+
+        #endregion
+        
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Author"/> class.
+        /// </summary>
+        public Author()
+        {
+            this.OnCreated();
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'AuthorId' value.
+        /// </summary>
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DataMember()]
+        [Editable(false, AllowInitialValue=true)]
+        [Key()]
+        [RoundtripOriginal()]
+        public int AuthorId
+        {
+            get
+            {
+                return this._authorId;
+            }
+            set
+            {
+                if ((this._authorId != value))
+                {
+                    this.OnAuthorIdChanging(value);
+                    this.ValidateProperty("AuthorId", value);
+                    this._authorId = value;
+                    this.RaisePropertyChanged("AuthorId");
+                    this.OnAuthorIdChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'FirstName' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(25)]
+        public string FirstName
+        {
+            get
+            {
+                return this._firstName;
+            }
+            set
+            {
+                if ((this._firstName != value))
+                {
+                    this.OnFirstNameChanging(value);
+                    this.RaiseDataMemberChanging("FirstName");
+                    this.ValidateProperty("FirstName", value);
+                    this._firstName = value;
+                    this.RaiseDataMemberChanged("FirstName");
+                    this.OnFirstNameChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'LastName' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(25)]
+        public string LastName
+        {
+            get
+            {
+                return this._lastName;
+            }
+            set
+            {
+                if ((this._lastName != value))
+                {
+                    this.OnLastNameChanging(value);
+                    this.RaiseDataMemberChanging("LastName");
+                    this.ValidateProperty("LastName", value);
+                    this._lastName = value;
+                    this.RaiseDataMemberChanged("LastName");
+                    this.OnLastNameChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Computes a value from the key fields that uniquely identifies this entity instance.
+        /// </summary>
+        /// <returns>An object instance that uniquely identifies this entity instance.</returns>
+        public override object GetIdentity()
+        {
+            return this._authorId;
+        }
+    }
+    
+    /// <summary>
+    /// The 'Book' entity class.
+    /// </summary>
+    [DataContract(Namespace="http://schemas.datacontract.org/2004/07/RIABooks.Web.Models")]
+    public sealed partial class Book : Entity
+    {
+        
+        private EntityRef<Author> _author;
+        
+        private int _authorId;
+        
+        private int _bookId;
+        
+        private BookType _bookType;
+        
+        private string _title;
+        
+        #region Extensibility Method Definitions
+
+        /// <summary>
+        /// This method is invoked from the constructor once initialization is complete and
+        /// can be used for further object setup.
+        /// </summary>
+        partial void OnCreated();
+        partial void OnAuthorIdChanging(int value);
+        partial void OnAuthorIdChanged();
+        partial void OnBookIdChanging(int value);
+        partial void OnBookIdChanged();
+        partial void OnBookTypeChanging(BookType value);
+        partial void OnBookTypeChanged();
+        partial void OnTitleChanging(string value);
+        partial void OnTitleChanged();
+
+        #endregion
+        
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Book"/> class.
+        /// </summary>
+        public Book()
+        {
+            this.OnCreated();
+        }
+        
+        /// <summary>
+        /// Gets or sets the associated <see cref="Author"/> entity.
+        /// </summary>
+        [Association("Author_Book", "AuthorId", "AuthorId", IsForeignKey=true)]
+        public Author Author
+        {
+            get
+            {
+                if ((this._author == null))
+                {
+                    this._author = new EntityRef<Author>(this, "Author", this.FilterAuthor);
+                }
+                return this._author.Entity;
+            }
+            set
+            {
+                Author previous = this.Author;
+                if ((previous != value))
+                {
+                    this.ValidateProperty("Author", value);
+                    if ((value != null))
+                    {
+                        this.AuthorId = value.AuthorId;
+                    }
+                    else
+                    {
+                        this.AuthorId = default(int);
+                    }
+                    this._author.Entity = value;
+                    this.RaisePropertyChanged("Author");
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'AuthorId' value.
+        /// </summary>
+        [DataMember()]
+        [RoundtripOriginal()]
+        public int AuthorId
+        {
+            get
+            {
+                return this._authorId;
+            }
+            set
+            {
+                if ((this._authorId != value))
+                {
+                    this.OnAuthorIdChanging(value);
+                    this.RaiseDataMemberChanging("AuthorId");
+                    this.ValidateProperty("AuthorId", value);
+                    this._authorId = value;
+                    this.RaiseDataMemberChanged("AuthorId");
+                    this.OnAuthorIdChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'BookId' value.
+        /// </summary>
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DataMember()]
+        [Editable(false, AllowInitialValue=true)]
+        [Key()]
+        [RoundtripOriginal()]
+        public int BookId
+        {
+            get
+            {
+                return this._bookId;
+            }
+            set
+            {
+                if ((this._bookId != value))
+                {
+                    this.OnBookIdChanging(value);
+                    this.ValidateProperty("BookId", value);
+                    this._bookId = value;
+                    this.RaisePropertyChanged("BookId");
+                    this.OnBookIdChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'BookType' value.
+        /// </summary>
+        [DataMember()]
+        public BookType BookType
+        {
+            get
+            {
+                return this._bookType;
+            }
+            set
+            {
+                if ((this._bookType != value))
+                {
+                    this.OnBookTypeChanging(value);
+                    this.RaiseDataMemberChanging("BookType");
+                    this.ValidateProperty("BookType", value);
+                    this._bookType = value;
+                    this.RaiseDataMemberChanged("BookType");
+                    this.OnBookTypeChanged();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the 'Title' value.
+        /// </summary>
+        [DataMember()]
+        [StringLength(100)]
+        public string Title
+        {
+            get
+            {
+                return this._title;
+            }
+            set
+            {
+                if ((this._title != value))
+                {
+                    this.OnTitleChanging(value);
+                    this.RaiseDataMemberChanging("Title");
+                    this.ValidateProperty("Title", value);
+                    this._title = value;
+                    this.RaiseDataMemberChanged("Title");
+                    this.OnTitleChanged();
+                }
+            }
+        }
+        
+        private bool FilterAuthor(Author entity)
+        {
+            return (entity.AuthorId == this.AuthorId);
+        }
+        
+        /// <summary>
+        /// Computes a value from the key fields that uniquely identifies this entity instance.
+        /// </summary>
+        /// <returns>An object instance that uniquely identifies this entity instance.</returns>
+        public override object GetIdentity()
+        {
+            return this._bookId;
+        }
+    }
+    
+    public enum BookType
+    {
+        
+        Nonfiction = 1,
+        
+        Fiction = 2,
+    }
+}
+namespace RIABooks.Web.Services
+{
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+    using System.Linq;
+    using System.ServiceModel;
+    using System.ServiceModel.DomainServices;
+    using System.ServiceModel.DomainServices.Client;
+    using System.ServiceModel.DomainServices.Client.ApplicationServices;
+    using System.ServiceModel.Web;
+    using RIABooks.Web.Models;
+    
+    
+    /// <summary>
+    /// The DomainContext corresponding to the 'BookService' DomainService.
+    /// </summary>
+    public sealed partial class BookContext : DomainContext
+    {
+        
+        #region Extensibility Method Definitions
+
+        /// <summary>
+        /// This method is invoked from the constructor once initialization is complete and
+        /// can be used for further object setup.
+        /// </summary>
+        partial void OnCreated();
+
+        #endregion
+        
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BookContext"/> class.
+        /// </summary>
+        public BookContext() : 
+                this(new WebDomainClient<IBookServiceContract>(new Uri("RIABooks-Web-Services-BookService.svc", UriKind.Relative)))
+        {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BookContext"/> class with the specified service URI.
+        /// </summary>
+        /// <param name="serviceUri">The BookService service URI.</param>
+        public BookContext(Uri serviceUri) : 
+                this(new WebDomainClient<IBookServiceContract>(serviceUri))
+        {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BookContext"/> class with the specified <paramref name="domainClient"/>.
+        /// </summary>
+        /// <param name="domainClient">The DomainClient instance to use for this DomainContext.</param>
+        public BookContext(DomainClient domainClient) : 
+                base(domainClient)
+        {
+            this.OnCreated();
+        }
+        
+        /// <summary>
+        /// Gets the set of <see cref="Author"/> entity instances that have been loaded into this <see cref="BookContext"/> instance.
+        /// </summary>
+        public EntitySet<Author> Authors
+        {
+            get
+            {
+                return base.EntityContainer.GetEntitySet<Author>();
+            }
+        }
+        
+        /// <summary>
+        /// Gets the set of <see cref="Book"/> entity instances that have been loaded into this <see cref="BookContext"/> instance.
+        /// </summary>
+        public EntitySet<Book> Books
+        {
+            get
+            {
+                return base.EntityContainer.GetEntitySet<Book>();
+            }
+        }
+        
+        /// <summary>
+        /// Gets an EntityQuery instance that can be used to load <see cref="Author"/> entity instances using the 'GetAuthors' query.
+        /// </summary>
+        /// <returns>An EntityQuery that can be loaded to retrieve <see cref="Author"/> entity instances.</returns>
+        public EntityQuery<Author> GetAuthorsQuery()
+        {
+            this.ValidateMethod("GetAuthorsQuery", null);
+            return base.CreateQuery<Author>("GetAuthors", null, false, true);
+        }
+        
+        /// <summary>
+        /// Gets an EntityQuery instance that can be used to load <see cref="Book"/> entity instances using the 'GetBooks' query.
+        /// </summary>
+        /// <returns>An EntityQuery that can be loaded to retrieve <see cref="Book"/> entity instances.</returns>
+        public EntityQuery<Book> GetBooksQuery()
+        {
+            this.ValidateMethod("GetBooksQuery", null);
+            return base.CreateQuery<Book>("GetBooks", null, false, true);
+        }
+        
+        /// <summary>
+        /// Creates a new EntityContainer for this DomainContext's EntitySets.
+        /// </summary>
+        /// <returns>A new container instance.</returns>
+        protected override EntityContainer CreateEntityContainer()
+        {
+            return new BookContextEntityContainer();
+        }
+        
+        /// <summary>
+        /// Service contract for the 'BookService' DomainService.
+        /// </summary>
+        [ServiceContract()]
+        public interface IBookServiceContract
+        {
+            
+            /// <summary>
+            /// Asynchronously invokes the 'GetAuthors' operation.
+            /// </summary>
+            /// <param name="callback">Callback to invoke on completion.</param>
+            /// <param name="asyncState">Optional state object.</param>
+            /// <returns>An IAsyncResult that can be used to monitor the request.</returns>
+            [FaultContract(typeof(DomainServiceFault), Action="http://tempuri.org/BookService/GetAuthorsDomainServiceFault", Name="DomainServiceFault", Namespace="DomainServices")]
+            [OperationContract(AsyncPattern=true, Action="http://tempuri.org/BookService/GetAuthors", ReplyAction="http://tempuri.org/BookService/GetAuthorsResponse")]
+            [WebGet()]
+            IAsyncResult BeginGetAuthors(AsyncCallback callback, object asyncState);
+            
+            /// <summary>
+            /// Completes the asynchronous operation begun by 'BeginGetAuthors'.
+            /// </summary>
+            /// <param name="result">The IAsyncResult returned from 'BeginGetAuthors'.</param>
+            /// <returns>The 'QueryResult' returned from the 'GetAuthors' operation.</returns>
+            QueryResult<Author> EndGetAuthors(IAsyncResult result);
+            
+            /// <summary>
+            /// Asynchronously invokes the 'GetBooks' operation.
+            /// </summary>
+            /// <param name="callback">Callback to invoke on completion.</param>
+            /// <param name="asyncState">Optional state object.</param>
+            /// <returns>An IAsyncResult that can be used to monitor the request.</returns>
+            [FaultContract(typeof(DomainServiceFault), Action="http://tempuri.org/BookService/GetBooksDomainServiceFault", Name="DomainServiceFault", Namespace="DomainServices")]
+            [OperationContract(AsyncPattern=true, Action="http://tempuri.org/BookService/GetBooks", ReplyAction="http://tempuri.org/BookService/GetBooksResponse")]
+            [WebGet()]
+            IAsyncResult BeginGetBooks(AsyncCallback callback, object asyncState);
+            
+            /// <summary>
+            /// Completes the asynchronous operation begun by 'BeginGetBooks'.
+            /// </summary>
+            /// <param name="result">The IAsyncResult returned from 'BeginGetBooks'.</param>
+            /// <returns>The 'QueryResult' returned from the 'GetBooks' operation.</returns>
+            QueryResult<Book> EndGetBooks(IAsyncResult result);
+            
+            /// <summary>
+            /// Asynchronously invokes the 'SubmitChanges' operation.
+            /// </summary>
+            /// <param name="changeSet">The change-set to submit.</param>
+            /// <param name="callback">Callback to invoke on completion.</param>
+            /// <param name="asyncState">Optional state object.</param>
+            /// <returns>An IAsyncResult that can be used to monitor the request.</returns>
+            [FaultContract(typeof(DomainServiceFault), Action="http://tempuri.org/BookService/SubmitChangesDomainServiceFault", Name="DomainServiceFault", Namespace="DomainServices")]
+            [OperationContract(AsyncPattern=true, Action="http://tempuri.org/BookService/SubmitChanges", ReplyAction="http://tempuri.org/BookService/SubmitChangesResponse")]
+            IAsyncResult BeginSubmitChanges(IEnumerable<ChangeSetEntry> changeSet, AsyncCallback callback, object asyncState);
+            
+            /// <summary>
+            /// Completes the asynchronous operation begun by 'BeginSubmitChanges'.
+            /// </summary>
+            /// <param name="result">The IAsyncResult returned from 'BeginSubmitChanges'.</param>
+            /// <returns>The collection of change-set entry elements returned from 'SubmitChanges'.</returns>
+            IEnumerable<ChangeSetEntry> EndSubmitChanges(IAsyncResult result);
+        }
+        
+        internal sealed class BookContextEntityContainer : EntityContainer
+        {
+            
+            public BookContextEntityContainer()
+            {
+                this.CreateEntitySet<Author>(EntitySetOperations.All);
+                this.CreateEntitySet<Book>(EntitySetOperations.All);
+            }
+        }
+    }
+}

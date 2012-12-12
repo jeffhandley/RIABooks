@@ -124,7 +124,7 @@
     <value>Already registered?</value>
   </data>
   <data name="ApplicationName" xml:space="preserve">
-    <value>Application Name</value>
+    <value>RIA Books (http://github.com/jeffhandley/RIABooks)</value>
   </data>
   <data name="AuthenticatingMessage" xml:space="preserve">
     <value>authenticating...</value>

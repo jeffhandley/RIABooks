@@ -70,7 +70,7 @@ namespace RIABooks {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Application Name.
+        ///   Looks up a localized string similar to RIA Books (http://github.com/jeffhandley/RIABooks).
         /// </summary>
         public static string ApplicationName {
             get {

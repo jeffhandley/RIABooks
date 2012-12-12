@@ -1,23 +1,38 @@
-﻿<navigation:Page
-  x:Class="RIABooks.Books" 
+﻿<navigation:Page 
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
+  xmlns:riaControls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.DomainServices" xmlns:Models="clr-namespace:RIABooks.Web.Models" xmlns:Services="clr-namespace:RIABooks.Web.Services" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+  x:Class="RIABooks.Books"
   mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="480"  
   Style="{StaticResource PageStyle}">
 
-  <Grid x:Name="LayoutRoot">
-    <ScrollViewer x:Name="PageScrollViewer" Style="{StaticResource PageScrollViewerStyle}">
+    <Grid x:Name="LayoutRoot">
+        <ScrollViewer x:Name="PageScrollViewer" Style="{StaticResource PageScrollViewerStyle}">
 
-      <StackPanel x:Name="ContentStackPanel" Style="{StaticResource ContentStackPanelStyle}">
+            <StackPanel x:Name="ContentStackPanel" Style="{StaticResource ContentStackPanelStyle}">
 
-        <TextBlock x:Name="HeaderText" Style="{StaticResource HeaderTextStyle}" 
-                           Text="{Binding Path=Strings.BooksPageTitle, Source={StaticResource ApplicationResources}}"/>
+                <TextBlock x:Name="HeaderText" Style="{StaticResource HeaderTextStyle}" 
+                           Text="{Binding Strings.BooksPageTitle, Source={StaticResource ApplicationResources}}"/>
 
-      </StackPanel>
+                <riaControls:DomainDataSource x:Name="bookDomainDataSource" AutoLoad="True" Height="0" LoadedData="bookDomainDataSource_LoadedData_1" QueryName="GetBooksQuery" Width="0" d:DesignData="{d:DesignInstance Models:Book, CreateList=true}">
+                    <riaControls:DomainDataSource.DomainContext>
+                        <Services:BookContext/>
+                    </riaControls:DomainDataSource.DomainContext>
+                </riaControls:DomainDataSource>
+                <sdk:DataGrid x:Name="bookDataGrid" AutoGenerateColumns="False" Height="200" ItemsSource="{Binding Data, ElementName=bookDomainDataSource}" RowDetailsVisibilityMode="VisibleWhenSelected" Width="400">
+                    <sdk:DataGrid.Columns>
+                        <sdk:DataGridTextColumn x:Name="authorIdColumn" Binding="{Binding AuthorId}" Header="Author Id" Width="SizeToHeader"/>
+                        <sdk:DataGridTextColumn x:Name="bookIdColumn" Binding="{Binding BookId, Mode=OneWay}" Header="Book Id" IsReadOnly="True" Width="SizeToHeader"/>
+                        <sdk:DataGridTextColumn x:Name="bookTypeColumn" Binding="{Binding BookType}" Header="Book Type" Width="SizeToHeader"/>
+                        <sdk:DataGridTextColumn x:Name="titleColumn" Binding="{Binding Title}" Header="Title" Width="SizeToHeader"/>
+                    </sdk:DataGrid.Columns>
+                </sdk:DataGrid>
 
-    </ScrollViewer>
-  </Grid>
+            </StackPanel>
+
+        </ScrollViewer>
+    </Grid>
 
 </navigation:Page>

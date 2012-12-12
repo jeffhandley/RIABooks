@@ -24,5 +24,15 @@
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
         }
+
+        private void authorDomainDataSource_LoadedData_1(object sender, System.Windows.Controls.LoadedDataEventArgs e)
+        {
+
+            if (e.HasError)
+            {
+                System.Windows.MessageBox.Show(e.Error.ToString(), "Load Error", System.Windows.MessageBoxButton.OK);
+                e.MarkErrorAsHandled();
+            }
+        }
     }
 }

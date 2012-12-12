@@ -9,6 +9,17 @@
   Style="{StaticResource PageStyle}">
 
     <Grid x:Name="LayoutRoot">
+        <riaControls:DomainDataSource x:Name="bookDomainDataSource" AutoLoad="True" Height="0" LoadedData="bookDomainDataSource_LoadedData_1" QueryName="GetBooksQuery" Width="0" d:DesignData="{d:DesignInstance Models:Book, CreateList=true}">
+            <riaControls:DomainDataSource.DomainContext>
+                <Services:BookContext/>
+            </riaControls:DomainDataSource.DomainContext>
+        </riaControls:DomainDataSource>
+        <riaControls:DomainDataSource x:Name="authorDomainDataSource" AutoLoad="True" Height="0" LoadedData="authorDomainDataSource_LoadedData_1" QueryName="GetAuthorsQuery" Width="0" d:DesignData="{d:DesignInstance Models:Author, CreateList=true}">
+            <riaControls:DomainDataSource.DomainContext>
+                <Services:BookContext/>
+            </riaControls:DomainDataSource.DomainContext>
+        </riaControls:DomainDataSource>
+
         <ScrollViewer x:Name="PageScrollViewer" Style="{StaticResource PageScrollViewerStyle}">
 
             <StackPanel x:Name="ContentStackPanel" Style="{StaticResource ContentStackPanelStyle}">
@@ -16,11 +27,6 @@
                 <TextBlock x:Name="HeaderText" Style="{StaticResource HeaderTextStyle}" 
                            Text="{Binding Strings.BooksPageTitle, Source={StaticResource ApplicationResources}}"/>
 
-                <riaControls:DomainDataSource x:Name="bookDomainDataSource" AutoLoad="True" Height="0" LoadedData="bookDomainDataSource_LoadedData_1" QueryName="GetBooksQuery" Width="0" d:DesignData="{d:DesignInstance Models:Book, CreateList=true}">
-                    <riaControls:DomainDataSource.DomainContext>
-                        <Services:BookContext/>
-                    </riaControls:DomainDataSource.DomainContext>
-                </riaControls:DomainDataSource>
                 <sdk:DataGrid x:Name="bookDataGrid" AutoGenerateColumns="False" Height="200" ItemsSource="{Binding Data, ElementName=bookDomainDataSource}" RowDetailsVisibilityMode="VisibleWhenSelected" Width="400">
                     <sdk:DataGrid.Columns>
                         <sdk:DataGridTextColumn x:Name="authorIdColumn" Binding="{Binding AuthorId}" Header="Author Id" Width="SizeToHeader"/>
@@ -29,7 +35,25 @@
                         <sdk:DataGridTextColumn x:Name="titleColumn" Binding="{Binding Title}" Header="Title" Width="SizeToHeader"/>
                     </sdk:DataGrid.Columns>
                 </sdk:DataGrid>
+                
+                <StackPanel Width="400" Orientation="Vertical" Margin="0,20,0,0">
+                    <TextBlock>Author</TextBlock>
+                    <ComboBox x:Name="authorComboBox" DisplayMemberPath="LastName" Height="18" ItemsSource="{Binding Data, ElementName=authorDomainDataSource}" SelectedValuePath="AuthorId" Width="400">
+                        <ComboBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel/>
+                            </ItemsPanelTemplate>
+                        </ComboBox.ItemsPanel>
+                    </ComboBox>
+                    
+                    <TextBlock>Book Type</TextBlock>
+                    <ComboBox x:Name="bookTypeComboBox" />
+                    
+                    <TextBlock>Title</TextBlock>
+                    <TextBox x:Name="titleTextBox" />
 
+                    <Button x:Name="addButton" Click="addButton_Click_1">Add Book</Button>
+                </StackPanel>
             </StackPanel>
 
         </ScrollViewer>

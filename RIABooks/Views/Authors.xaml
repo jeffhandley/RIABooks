@@ -28,6 +28,16 @@
                         <sdk:DataGridTextColumn x:Name="lastNameColumn" Binding="{Binding LastName}" Header="Last Name" Width="SizeToHeader"/>
                     </sdk:DataGrid.Columns>
                 </sdk:DataGrid>
+                
+                <StackPanel Width="400" Orientation="Vertical">
+                    <TextBlock>First Name</TextBlock>
+                    <TextBox x:Name="firstNameTextBox" />
+                    
+                    <TextBlock>Last Name</TextBlock>
+                    <TextBox x:Name="lastNameTextBox" />
+                    
+                    <Button x:Name="addAuthorButton" Click="addAuthorButton_Click_1">Add Author</Button>
+                </StackPanel>
             </StackPanel>
 
         </ScrollViewer>

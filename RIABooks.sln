@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RIABooks", "RIABooks\RIABooks.csproj", "{D135118E-9A6B-4099-88CF-A3D1B1972A83}"
+	ProjectSection(ProjectDependencies) = postProject
+		{44DE639F-12B2-4723-A1A1-3E033E01E5BB} = {44DE639F-12B2-4723-A1A1-3E033E01E5BB}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RIABooks.Web", "RIABooks.Web\RIABooks.Web.csproj", "{44DE639F-12B2-4723-A1A1-3E033E01E5BB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{A0973300-CD23-46F9-8529-BC909284A94E}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D135118E-9A6B-4099-88CF-A3D1B1972A83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D135118E-9A6B-4099-88CF-A3D1B1972A83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D135118E-9A6B-4099-88CF-A3D1B1972A83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D135118E-9A6B-4099-88CF-A3D1B1972A83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44DE639F-12B2-4723-A1A1-3E033E01E5BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44DE639F-12B2-4723-A1A1-3E033E01E5BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44DE639F-12B2-4723-A1A1-3E033E01E5BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44DE639F-12B2-4723-A1A1-3E033E01E5BB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
